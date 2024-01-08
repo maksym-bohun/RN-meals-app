@@ -1,13 +1,30 @@
 import { StatusBar } from "expo-status-bar";
-import { Platform, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import CategoriesScreen from "./screens/CategoriesScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import { CATEGORIES } from "./data/dummy-data";
 import MealDetailScreen from "./screens/MealDetailScreen";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="Main" component={CategoriesScreen} />
+    </Drawer.Navigator>
+  );
+};
 
 export default function App() {
   return (
@@ -26,22 +43,12 @@ export default function App() {
         >
           <Stack.Screen
             name="MealsCategories"
-            component={CategoriesScreen}
+            component={DrawerNavigator}
             options={{
               title: "All Categories",
             }}
           />
-          <Stack.Screen
-            name="Meals overview"
-            component={MealsOverviewScreen}
-            // options={({ route, navigation }) => {
-            //   const catId = route.params.categoryId;
-            //   const title = CATEGORIES.find(
-            //     (category) => category.id === catId
-            //   ).title;
-            //   console.log(title);
-            // }}
-          />
+          <Stack.Screen name="Meals overview" component={MealsOverviewScreen} />
           <Stack.Screen name="MealDetail" component={MealDetailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
