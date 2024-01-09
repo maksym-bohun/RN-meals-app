@@ -1,5 +1,5 @@
 import { useRoute } from "@react-navigation/native";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import {
   Button,
   Image,
@@ -13,16 +13,21 @@ import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/mealDetail/Subtitle";
 import List from "../components/mealDetail/List";
 import IconButton from "../components/IconButton";
+import { FavoritesContext } from "../store/context/favorites-context";
 
 const MealDetailScreen = ({ route, navigation }) => {
   const mealId = route.params.id;
-  const [iconColor, setIconColor] = useState("#fff");
+
+  const favoritesMealsCtx = useContext(FavoritesContext);
 
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+  const mealIsFavorite = favoritesMealsCtx.ids.includes(mealId);
+  const { addFavorite, removeFavorite } = favoritesMealsCtx;
 
   const headerButtonPressedHander = () => {
-    console.log("pressed");
-    iconColor === "#fff" ? setIconColor("orange") : setIconColor("#fff");
+    if (mealIsFavorite) {
+      removeFavorite(mealId);
+    } else addFavorite(mealId);
   };
 
   useLayoutEffect(() => {
@@ -30,14 +35,14 @@ const MealDetailScreen = ({ route, navigation }) => {
       headerRight: () => {
         return (
           <IconButton
-            icon="star"
-            color={iconColor}
+            icon={mealIsFavorite ? "star" : "star-outline"}
+            color={"#fff"}
             onPress={headerButtonPressedHander}
           />
         );
       },
     });
-  }, [iconColor]);
+  }, [mealIsFavorite]);
 
   return (
     <ScrollView style={styles.screen}>

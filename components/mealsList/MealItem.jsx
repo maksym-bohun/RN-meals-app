@@ -40,25 +40,25 @@ const MealItem = ({ item }) => {
               {item.isGlutenFree && (
                 <Image
                   style={styles.icon}
-                  source={require("../assets/icons/gluten-free.png")}
+                  source={require("../../assets/icons/gluten-free.png")}
                 />
               )}
               {item.isVegan && (
                 <Image
                   style={styles.icon}
-                  source={require("../assets/icons/lactose-free.png")}
+                  source={require("../../assets/icons/lactose-free.png")}
                 />
               )}
               {item.isVegetarian && (
                 <Image
                   style={styles.icon}
-                  source={require("../assets/icons/no-meat.png")}
+                  source={require("../../assets/icons/no-meat.png")}
                 />
               )}
               {item.isLactoseFree && (
                 <Image
                   style={styles.icon}
-                  source={require("../assets/icons/vegan.png")}
+                  source={require("../../assets/icons/vegan.png")}
                 />
               )}
             </View>
